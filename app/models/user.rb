@@ -37,9 +37,20 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
-  
+
   # 検索機能
   def self.looks(search, word)
-    if seach == "perfect_match"
-      @user = user.where("name LIKE?", "#{word}")
+    if search == "perfect_match"
+      @user = User.where("name LIKE?","#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = user.all
+    end
+  end
+
 end

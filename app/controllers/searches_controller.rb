@@ -4,11 +4,12 @@ class SearchesController < ApplicationController
   def search
     @model = params[:model]
     @content = params[:content]
+    @method = params[:method]
 
-    if @model == "User"
-      @records = User.search(params[:content], params[:method])
+    if @model == "user"
+      @records = User.search_for(@content, @method)
     else
-      @records = Books.search(params[:content], params[:method])
+      @records = Book.search_for(@content, @method)
     end
   end
 
